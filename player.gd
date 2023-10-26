@@ -1,27 +1,27 @@
 class_name Player
 extends CharacterBody2D
-
+# 클래스
 static var player: Player
 static var node: Node
 static var nodes: Array[Node] = []
-
+# 속도 스텟
 const SPEED = 50
 const MAXSPEED = 1000.0
-
+# 체력 스텟
 var HP = 100
-
+# 무기 리스트
 var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[1,2,3,4,5,6],[2,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
 var EquipedWeapon = '도끼'
-
+# 아이템 
 var AItems = {"포션":1}
 var PItems = {"검":1,"블라스타":2}
 var icons = "res://Sprite/Icons/Items"
-
+# 아이템 소유 리스트
 var Item = []
 var ActiveItem = ["포션"]
-
+# 손에 든 아이템
 var SelectItem = 0
-
+# 공격 관련 변수
 var attackdir
 var HitboxLength = 0
 var HitboxWidth = 0
@@ -30,7 +30,9 @@ var attackdamage = 0
 var attackey = 0
 
 var attack
+# 구르기 중
 var rolling = false
+var rolling_cooldown = 0
 
 var status = [] #무기이름 약공뎀 강공뎀 약공범위길이 강공범위길이 약공선후딜 강공선후딜
 var item = []
@@ -77,7 +79,7 @@ func _ready():
 func distance(first:Vector2,second:Vector2):
 	var answer = sqrt(pow(first.x-second.x,2) + pow(first.y-second.y,2))
 	return answer
-
+# 물리적 움직임 업데이트
 func _physics_process(delta):
 	var direction =  get_local_mouse_position() - position * delta
 	var distance = sqrt(pow(direction.x,2) + pow(direction.y,2))
@@ -126,8 +128,11 @@ func _physics_process(delta):
 			target = null
 		
 		
-			
-		if Input.is_action_just_pressed("구르기"):
+		if rolling_cooldown > 0 :
+			rolling_cooldown -= delta
+		else:
+			rolling_cooldown = 0
+		if Input.is_action_just_pressed("구르기") and rolling_cooldown == 0:
 			delay = true
 			animationPlayer.play("roll")
 			attackey = 0
@@ -136,9 +141,10 @@ func _physics_process(delta):
 			velocity.move_toward(Vector2.ZERO,delta*300)
 			await get_tree().create_timer(0.05).timeout
 			velocity = Vector2.ZERO
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(0).timeout
+			rolling_cooldown=0.2;
 			delay = false
-		
+			
 		if Input.is_action_just_pressed("공격"):
 			attack = true
 		

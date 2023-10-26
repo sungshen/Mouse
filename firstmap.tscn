@@ -15,7 +15,7 @@ position = Vector2(-348, -128)
 position = Vector2(-254, 310)
 
 [node name="player" parent="." instance=ExtResource("1_1hw02")]
-position = Vector2(298, 101)
+position = Vector2(377, -61)
 metadata/NPC = []
 
 [node name="enemy4" parent="." instance=ExtResource("3_yay48")]
