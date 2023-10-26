@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhmgnirrt6vsu"]
+
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1hw02"]
+[ext_resource type="PackedScene" uid="uid://d2x2djx3h7ros" path="res://enemy.tscn" id="3_yay48"]
+
+[node name="firstmap" type="Node2D"]
+
+[node name="enemy3" parent="." instance=ExtResource("3_yay48")]
+position = Vector2(922, -64)
+
+[node name="enemy2" parent="." instance=ExtResource("3_yay48")]
+position = Vector2(-348, -128)
+
+[node name="enemy" parent="." instance=ExtResource("3_yay48")]
+position = Vector2(-254, 310)
+
+[node name="player" parent="." instance=ExtResource("1_1hw02")]
+position = Vector2(298, 101)
+metadata/NPC = []
+
+[node name="enemy4" parent="." instance=ExtResource("3_yay48")]
+position = Vector2(1507, 605)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-690, 317, -955, -289, -746, 17, -746, -438, -520, -563, -299, -602, 122, -602, 493, -591, 883, -574, 1115, -495, 1398, -345, 1505, 221, 1361, 458, 1140, 597, 824, 710, 425, 806, -240, 713, -789, 484, -752, 518, -407, 735, 51, 868, 614, 928, 1010, 865, 1367, 583, 1686, 37, 1607, -359, 1205, -580, -540, -690, -1108, -354)

@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhmgnirrt6vsu"]
+
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1hw02"]
+[ext_resource type="Script" path="res://enemy.gd" id="2_6nq1w"]
+[ext_resource type="Texture2D" uid="uid://rhaj8wy8iech" path="res://enemy.png" id="3_ohw88"]
+[ext_resource type="PackedScene" uid="uid://d3wsmgect1nes" path="res://camera_2d.tscn" id="3_xk0pr"]
+[ext_resource type="Script" path="res://Line2D.gd" id="4_bo2ia"]
+[ext_resource type="Texture2D" uid="uid://b8aeo0tlqyist" path="res://검기.png" id="6_8qrgt"]
+[ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://hitbox.tscn" id="6_y7inl"]
+[ext_resource type="Script" path="res://hpbar.gd" id="8_mfx77"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j8hew"]
+
+[node name="firstmap" type="Node2D"]
+position = Vector2(202, 139)
+
+[node name="enemy" type="CharacterBody2D" parent="."]
+position = Vector2(639, 150)
+script = ExtResource("2_6nq1w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy"]
+position = Vector2(1, 2)
+shape = SubResource("CircleShape2D_j8hew")
+one_way_collision_margin = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="enemy"]
+texture = ExtResource("3_ohw88")
+
+[node name="enemy2" type="CharacterBody2D" parent="."]
+position = Vector2(888, 39)
+script = ExtResource("2_6nq1w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy2"]
+position = Vector2(-3, 2)
+shape = SubResource("CircleShape2D_j8hew")
+one_way_collision_margin = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="enemy2"]
+texture = ExtResource("3_ohw88")
+
+[node name="Camera2D" parent="." instance=ExtResource("3_xk0pr")]
+position = Vector2(504, 158)
+position_smoothing_speed = 5.0
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(-0.999939, -1, 13, 12, 23, -2)
+script = ExtResource("4_bo2ia")
+
+[node name="player" parent="." instance=ExtResource("1_1hw02")]
+metadata/NPC = []
+
+[node name="Area2D" parent="." instance=ExtResource("6_y7inl")]
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="Node2D2" type="Node2D" parent="ui"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ui/Node2D2"]
+position = Vector2(22, 5)
+scale = Vector2(1, 0.117647)
+skew = 0.572468
+texture = ExtResource("6_8qrgt")
+script = ExtResource("8_mfx77")
+
+[node name="Node2D" type="Node2D" parent="ui"]
+position = Vector2(1784, 1006)
+
+[node name="Sprite2D" type="Sprite2D" parent="ui/Node2D"]
+position = Vector2(1, -1)
+scale = Vector2(1, 0.117647)
+skew = 0.572468
+texture = ExtResource("6_8qrgt")
+script = ExtResource("8_mfx77")

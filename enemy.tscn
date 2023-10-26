@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2x2djx3h7ros"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_wt0rs"]
+[ext_resource type="Texture2D" uid="uid://rhaj8wy8iech" path="res://enemy.png" id="2_84cqi"]
+[ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="3_aafn1"]
+[ext_resource type="Script" path="res://Overlap/enemyhitbox.gd" id="4_eil24"]
+[ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="4_wy0pk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77504"]
+size = Vector2(27.168, 30.9258)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxvoo"]
+size = Vector2(56.5, 77.5)
+
+[node name="enemy" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_wt0rs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_84cqi")
+
+[node name="hitbox" parent="." instance=ExtResource("3_aafn1")]
+collision_layer = 4
+script = ExtResource("4_eil24")
+
+[node name="heartbox" parent="." instance=ExtResource("4_wy0pk")]
+collision_mask = 8
+
+[node name="hurtboxsize" type="CollisionShape2D" parent="heartbox"]
+shape = SubResource("RectangleShape2D_77504")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.25, -1.25)
+shape = SubResource("RectangleShape2D_mxvoo")
+
+[connection signal="area_entered" from="heartbox" to="." method="_on_heartbox_area_entered"]
+
+[editable path="hitbox"]
+[editable path="heartbox"]
