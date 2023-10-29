@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgwonmnmdug1l"]
+
+[ext_resource type="Script" path="res://dragon.gd" id="1_ags26"]
+[ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="3_yl1l4"]
+[ext_resource type="Script" path="res://Overlap/enemyhitbox.gd" id="4_np4sp"]
+[ext_resource type="Texture2D" uid="uid://c0oufgw5khcw4" path="res://Sprite/Player/PlayerIdle1.png" id="5_q3yn5"]
+[ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="5_wkxqa"]
+[ext_resource type="Texture2D" uid="uid://vhw136k2d72k" path="res://Sprite/Player/PlayerIdle2.png" id="6_sfp8v"]
+[ext_resource type="Texture2D" uid="uid://cncjoksshr7fi" path="res://Sprite/Player/PlayerIdle3.png" id="7_4xv0p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu5k4"]
+size = Vector2(77, 109)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_desey"]
+size = Vector2(55.5, 75)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vn7wm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_q3yn5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sfp8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4xv0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sfp8v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="dragon" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_ags26")
+
+[node name="hitbox" parent="." instance=ExtResource("3_yl1l4")]
+collision_layer = 4
+script = ExtResource("4_np4sp")
+
+[node name="heartbox" parent="." instance=ExtResource("5_wkxqa")]
+collision_mask = 8
+
+[node name="hurtboxsize" type="CollisionShape2D" parent="heartbox"]
+shape = SubResource("RectangleShape2D_hu5k4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_desey")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vn7wm")
+animation = &"idle"
+
+[connection signal="area_entered" from="heartbox" to="." method="_on_heartbox_area_entered"]
+
+[editable path="hitbox"]
+[editable path="heartbox"]

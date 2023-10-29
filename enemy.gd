@@ -2,12 +2,11 @@ class_name enemy
 
 extends CharacterBody2D
 
-var HP = 50
+var HP = 10
 var delay = false
 var player = Player.player
 var attackdamage = 0
-var death = false
-var Countable = false
+var Countable = true
 
 func _ready():
 	Player.nodes.append(self)
@@ -22,7 +21,7 @@ func _on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
 		HP -= player.attackdamage
 		await get_tree().create_timer(0.1).timeout
-	if(player.attackey == 30 && Countable)
+	if(player.attackey == 30 && Countable == true):
 		delay = true
 		await get_tree().create_timer(15).timeout
 		delay = false
