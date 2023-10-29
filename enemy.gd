@@ -23,6 +23,11 @@ func _on_heartbox_area_entered(area):
 		death = true
 		Player.nodes.pop_at(Player.nodes.find(self))
 		queue_free()
-	if(player.attacktype ==
+	if(player.attackey == 30)
+		delay = true
+		await get_tree().create_timer(status[7]/60).timeout
+		delay = false
 
-func stun():
+func pattern():
+	match
+	
