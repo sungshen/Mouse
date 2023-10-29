@@ -82,7 +82,7 @@ func distance(first:Vector2,second:Vector2):
 # 물리적 움직임 업데이트
 func _physics_process(delta):
 	var direction =  get_local_mouse_position() - position * delta
-	var distance = sqrt(pow(direction.x,2) + pow(direction.y,2))
+	var mousedistance = sqrt(pow(direction.x,2) + pow(direction.y,2))
 
 	player = Player.player
 	distance(cam.position*delta,position*delta)
@@ -112,9 +112,9 @@ func _physics_process(delta):
 		pass
 	else:	
 		direction =  get_local_mouse_position() - position * delta 
-		if distance > 10:
+		if mousedistance > 10:
 			animationPlayer.play("run")
-			velocity = direction.normalized() * clamp(1.5*distance,SPEED,MAXSPEED)
+			velocity = direction.normalized() * clamp(1.5*mousedistance,SPEED,MAXSPEED)
 		else :
 			animationPlayer.play("idle")
 			velocity = Vector2.ZERO
@@ -200,3 +200,7 @@ func passive(a):
 
 func _on_area_2d_2_area_entered(area):
 	HP -= area.attackdamage
+	delay = true
+	velocity = 250*(position-target.position).normalized()
+	await get_tree().create_timer(0.2).timeout
+	delay = false
