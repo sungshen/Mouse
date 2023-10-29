@@ -10,6 +10,6 @@ func _process(delta):
 	player = Player.player
 	scale.x = player.HitboxLength
 	scale.y = player.HitboxWidth 
-	position = player.attackdir * ((10*scale.x) + 80) 
+	position = player.attackdir * ((10*scale.x) + 90) 
 	rotation_degrees = atan2(player.attackdir.y,player.attackdir.x) * 180 / PI
 	
