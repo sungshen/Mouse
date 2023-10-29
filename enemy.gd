@@ -7,27 +7,26 @@ var delay = false
 var player = Player.player
 var attackdamage = 0
 var death = false
+var Countable = false
 
 func _ready():
 	Player.nodes.append(self)
 	player = Player.new()
 
-
 func _physics_process(delta):
-	if(!death):
-		Player.nodes[Player.nodes.find(self)] = self
+	if(HP < 0):
+		death()
 	player = Player.player
 
 func _on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
-		death = true
-		Player.nodes.pop_at(Player.nodes.find(self))
-		queue_free()
-	if(player.attackey == 30)
+		HP -= player.attackdamage
+		await get_tree().create_timer(0.1).timeout
+	if(player.attackey == 30 && Countable)
 		delay = true
-		await get_tree().create_timer(status[7]/60).timeout
+		await get_tree().create_timer(15).timeout
 		delay = false
 
-func pattern():
-	match
-	
+func death():
+	Player.nodes.pop_at(Player.nodes.find(self))
+	queue_free()
