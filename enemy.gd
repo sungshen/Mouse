@@ -23,3 +23,6 @@ func _on_heartbox_area_entered(area):
 		death = true
 		Player.nodes.pop_at(Player.nodes.find(self))
 		queue_free()
+	if(player.attacktype ==
+
+func stun():
