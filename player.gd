@@ -5,7 +5,7 @@ static var player: Player
 static var node: Node
 static var nodes: Array[Node] = []
 # 속도 스텟
-const SPEED = 50
+const SPEED = 120
 const MAXSPEED = 1000.0
 # 체력 스텟
 var HP = 100
@@ -171,9 +171,9 @@ func _physics_process(delta):
 			if Input.is_action_just_released("공격") || attackey == 30:
 				velocity = Vector2.ZERO
 				delay = true
+				animationPlayer.play("idle")
 				if attackey != 30:
 					attackdamage = status[1]
-					animationPlayer.play("attack")
 					await get_tree().create_timer(status[7]/60).timeout
 					HitboxLength = status[3]
 					HitboxWidth = status[4]
@@ -183,7 +183,6 @@ func _physics_process(delta):
 					await get_tree().create_timer(status[8]/60).timeout
 				else:
 					attackdamage = status[2]
-					animationPlayer.play("strongattack")
 					await get_tree().create_timer(status[9]/60).timeout
 					HitboxLength = status[5]
 					HitboxWidth = status[6]
@@ -217,6 +216,7 @@ func passive(a):
 
 
 func _on_area_2d_2_area_entered(area):
+	animationPlayer.play("hit")
 	HP -= area.attackdamage
 	delay = true
 	velocity = 750*(position-(area.position+area.enemy.position)).normalized()
