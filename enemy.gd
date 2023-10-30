@@ -2,6 +2,7 @@ class_name enemy
 
 extends CharacterBody2D
 
+static var enemy :Enemy
 var HP = 10
 var delay = false
 var player = Player.player
