@@ -11,6 +11,7 @@ var Countable = true
 func _ready():
 	Player.nodes.append(self)
 	player = Player.new()
+	enemy = self
 
 func _physics_process(delta):
 	if(HP < 0):
