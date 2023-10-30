@@ -2,7 +2,7 @@ class_name enemy
 
 extends CharacterBody2D
 
-static var enemy :enemy
+static var Enemy :enemy
 var HP = 10
 var delay = false
 var player = Player.player
@@ -12,9 +12,10 @@ var Countable = true
 func _ready():
 	Player.nodes.append(self)
 	player = Player.new()
-	enemy = self
+	Enemy = self.new()
 
 func _physics_process(delta):
+	Enemy = Enemy.Enemy
 	if(HP < 0):
 		death()
 	player = Player.player
