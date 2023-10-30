@@ -9,6 +9,11 @@ const SPEED = 50
 const MAXSPEED = 1000.0
 # 체력 스텟
 var HP = 100
+# 스테미나 스텟
+var max_stamina = 100
+var current_stamina = 100
+var stamina_frozen = false
+var stamina_recovery = 10
 # 무기 리스트
 var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[1,2,3,4,5,6],[2,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
 var EquipedWeapon = '도끼'
@@ -106,7 +111,9 @@ func _physics_process(delta):
 	attackey = clamp(attackey,0,30)
 	move_and_slide()
 	
-
+	#스테미나 회복
+	if(!frozen_stamina):
+		current_stamina=min(max_stamina,current_stamina + delta * stamina_recovery )
 	
 	if delay == true:
 		pass
@@ -127,13 +134,21 @@ func _physics_process(delta):
 			attackdir = direction.normalized()
 			target = null
 		
-		
+		#구르기 쿨타임
 		if rolling_cooldown > 0 :
 			rolling_cooldown -= delta
 		else:
 			rolling_cooldown = 0
-		if Input.is_action_just_pressed("구르기") and rolling_cooldown == 0:
+
+
+		# 구르기 입력을 받았을 때 구르기 쿨타임이 끝났고, 현제 스테미너가 충분할 때 구르기 동작을 실행합니다.
+		if Input.is_action_just_pressed("구르기") and (rolling_cooldown == 0) and (current_stamina > 30):
+			#구르기 전 처리
 			delay = true
+			stamina_frozen = true
+			current_stamina -= 30
+
+			#구르기 과정
 			animationPlayer.play("roll")
 			attackey = 0
 			velocity = 1450*direction.normalized()
@@ -141,8 +156,11 @@ func _physics_process(delta):
 			velocity.move_toward(Vector2.ZERO,delta*300)
 			await get_tree().create_timer(0.05).timeout
 			velocity = Vector2.ZERO
+
+			#구르기 후 처리
 			await get_tree().create_timer(0).timeout
-			rolling_cooldown=0.2;
+			rolling_cooldown=0.2
+			stamina_frozen = false
 			delay = false
 			
 		if Input.is_action_just_pressed("공격"):
