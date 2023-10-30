@@ -119,9 +119,12 @@ func _physics_process(delta):
 		pass
 	else:	
 		direction =  get_local_mouse_position() - position * delta 
-		if mousedistance > 10:
-			animationPlayer.play("run")
-			velocity = direction.normalized() * clamp(1.5*mousedistance,SPEED,MAXSPEED)
+		if distance > 20:
+			if distance > 25:
+				animationPlayer.play("run")
+			else:
+				animationPlayer.play("idle")
+			velocity = direction.normalized() * clamp(1.5*distance,SPEED,MAXSPEED)
 		else :
 			animationPlayer.play("idle")
 			velocity = Vector2.ZERO
