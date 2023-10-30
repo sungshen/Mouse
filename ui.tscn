@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://u1r1yb6txyg4"]
+
+[ext_resource type="Script" path="res://ui.gd" id="1_sbg26"]
+[ext_resource type="Texture2D" uid="uid://b8aeo0tlqyist" path="res://검기.png" id="2_3xscn"]
+[ext_resource type="Script" path="res://PlayerHPBar.gd" id="2_l7geb"]
+[ext_resource type="Script" path="res://PlayerStaminaBar.gd" id="3_beey4"]
+[ext_resource type="Script" path="res://TargetHPBar.gd" id="4_bkhh5"]
+[ext_resource type="Script" path="res://SelectedItem.gd" id="6_vnt8h"]
+[ext_resource type="Script" path="res://LeftItem.gd" id="7_3okvf"]
+[ext_resource type="Script" path="res://RightItem.gd" id="8_6d33n"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_sbg26")
+
+[node name="PlayerHPBar" type="ProgressBar" parent="."]
+offset_left = 1476.0
+offset_top = 759.0
+offset_right = 1793.0
+offset_bottom = 786.0
+script = ExtResource("2_l7geb")
+
+[node name="PlayerStaminaBar" type="ProgressBar" parent="."]
+offset_left = 1475.0
+offset_top = 811.0
+offset_right = 1795.0
+offset_bottom = 840.0
+script = ExtResource("3_beey4")
+
+[node name="TargetHPBar" type="ProgressBar" parent="."]
+offset_left = 288.0
+offset_top = 52.0
+offset_right = 1625.0
+offset_bottom = 108.0
+script = ExtResource("4_bkhh5")
+
+[node name="SelectedItem" type="Sprite2D" parent="."]
+position = Vector2(1634, 931)
+scale = Vector2(4.5303, 4.26471)
+texture = ExtResource("2_3xscn")
+script = ExtResource("6_vnt8h")
+
+[node name="LeftItem" type="Sprite2D" parent="."]
+position = Vector2(1503, 966)
+scale = Vector2(2.20455, 2.23529)
+texture = ExtResource("2_3xscn")
+script = ExtResource("7_3okvf")
+
+[node name="RightItem" type="Sprite2D" parent="."]
+position = Vector2(1765, 964)
+scale = Vector2(2.20455, 2.23529)
+texture = ExtResource("2_3xscn")
+script = ExtResource("8_6d33n")
