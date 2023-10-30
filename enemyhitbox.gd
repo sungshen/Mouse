@@ -1,15 +1,15 @@
 extends Area2D
 
 var attackdamage = 0
-var enemy = enemy.enemy
+var Enemy = enemy.Enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	enemy = enemy.new()
+	Enemy = enemy.new()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	enemy = enemy.enemy
+	Enemy = enemy.Enemy
 	position = Vector2(50,50)
         attackdamage = enemy.attackdamage
