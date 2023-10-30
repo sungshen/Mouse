@@ -12,7 +12,7 @@ var Countable = true
 func _ready():
 	Player.nodes.append(self)
 	player = Player.new()
-	Enemy = self.new()
+	Enemy = self
 
 func _physics_process(delta):
 	Enemy = Enemy.Enemy
