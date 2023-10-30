@@ -201,7 +201,7 @@ func passive(a):
 func _on_area_2d_2_area_entered(area):
 	HP -= area.attackdamage
 	delay = true
-	velocity = 750*(position-target.position).normalized()
+	velocity = 750*(position-(area.position+area.enemy.position)).normalized()
 	await get_tree().create_timer(0.1).timeout
 	delay = false
 	await get_tree().create_timer(0.3).timeout #피격 무적시간
