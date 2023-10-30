@@ -205,7 +205,7 @@ func active(a):
 		2:
 			HP -= 10
 			
-	load(icons + '/' + a + '.png')
+	load(icons + '/' + a + '.png') #아이템 아이콘 로딩 (아이템이름.png로 저장)
 		
 func passive(a):
 	match PItems[a]:
