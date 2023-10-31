@@ -4,14 +4,12 @@ extends enemy
 
 func _ready():
 	ready():
+	patternvarious = 3
+	HP = 500
+	
 
 func _physics_process(delta):
 	physics_process(delta):
-	if(delay == false):
-		pattern(randi_range(0,5))
-		delay == true
-		await get_tree().create_timer(1).timeout
-		delay == false
 		
 func pattern(a):
 	match a:
