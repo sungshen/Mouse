@@ -112,19 +112,19 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	#스테미나 회복
-	if(!frozen_stamina):
+	if(!stmina_frozen):
 		current_stamina=min(max_stamina,current_stamina + delta * stamina_recovery )
 	
 	if delay == true:
 		pass
 	else:	
 		direction =  get_local_mouse_position() - position * delta 
-		if distance > 20:
-			if distance > 25:
+		if mousedistance > 20:
+			if mousedistance > 25:
 				animationPlayer.play("run")
 			else:
 				animationPlayer.play("idle")
-			velocity = direction.normalized() * clamp(1.5*distance,SPEED,MAXSPEED)
+			velocity = direction.normalized() * clamp(1.5*mousedistance,SPEED,MAXSPEED)
 		else :
 			animationPlayer.play("idle")
 			velocity = Vector2.ZERO
