@@ -16,7 +16,7 @@ var current_stamina = 100
 var stamina_frozen = false
 var stamina_recovery = 10
 # 무기 리스트
-var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[100,2,3,4,5,6],[200,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
+var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[10,2,3,4,5,6],[25,4,6,8,10,12],[4,1,2,2,3,3,4,4],[1,3,2,1,5,1],[3,1,2,2,3,3,4,4],[3,3,2,1,5,1],[30,1,1,1,1,5],[20,2,2,2,3,1],[40,1,1,1,1,5],[60,2,2,2,3,1]]
 var EquipedWeapon = '도끼'
 # 아이템 
 var AItems = {"공백":0,"포션":1}
@@ -48,6 +48,9 @@ var delay = false
 var target
 
 var cam = Cam.cam
+
+var mousedistance
+var direction
 
 func _enter_tree():
 	for i in range(11):
@@ -88,9 +91,11 @@ func distance(first:Vector2,second:Vector2):
 	return answer
 # 물리적 움직임 업데이트
 func _physics_process(delta):
-	var direction =  get_local_mouse_position() - position * delta
-	var mousedistance = sqrt(pow(direction.x,2) + pow(direction.y,2))
-
+	direction =  get_local_mouse_position() - position * delta
+	mousedistance = sqrt(pow(direction.x,2) + pow(direction.y,2))
+	
+	if HP <= 0:
+		queue_free()
 	player = Player.player
 	distance(cam.position*delta,position*delta)
 	if(distance(position,(sum(nodes)+position)/(len(nodes)+1)) > 2000):
@@ -102,11 +107,11 @@ func _physics_process(delta):
 		
 	cam = Cam.cam
 	
+	current_stamina = clamp(current_stamina,0,max_stamina)
 	
 	SelectItem += int(Input.is_action_just_pressed("휠업")) - int(Input.is_action_just_pressed("휠다운"))
 	SelectItem = loop(SelectItem,len(ActiveItem)-1)
-		
-	print(ActiveItem[SelectItem])
+	
 	
 	if Input.is_action_just_pressed("아이템 사용"):
 		active(ActiveItem[SelectItem])
@@ -150,7 +155,8 @@ func _physics_process(delta):
 			delay = true
 			stamina_frozen = true
 			current_stamina -= 30
-
+			rolling = true
+			
 			#구르기 과정
 			animationPlayer.play("roll")
 			attackey = 0
@@ -165,6 +171,7 @@ func _physics_process(delta):
 			rolling_cooldown=0.2
 			stamina_frozen = false
 			delay = false
+			rolling = false
 			
 		if Input.is_action_just_pressed("공격"):
 			attack = true
@@ -181,15 +188,18 @@ func _physics_process(delta):
 					HitboxLength = status[3]
 					HitboxWidth = status[4]
 					await get_tree().create_timer(0.1).timeout
+					attackdamage = 0
 					HitboxLength = 0
 					HitboxWidth = 0
 					await get_tree().create_timer(status[8]/60).timeout
-				else:
+				elif(current_stamina > 25):
+					current_stamina -= 25
 					attackdamage = status[2]
 					await get_tree().create_timer(status[9]/60).timeout
 					HitboxLength = status[5]
 					HitboxWidth = status[6]
 					await get_tree().create_timer(0.1).timeout
+					attackdamage = 0
 					HitboxLength = 0
 					HitboxWidth = 0
 					await get_tree().create_timer(status[10]/60).timeout
@@ -197,14 +207,13 @@ func _physics_process(delta):
 				attackey = 0
 				delay = false
 				attack = false
-				attackdamage = 0
+				
 
 			
 func active(a):
 	match AItems[a]:
 		1:
 			HP += 10
-			print('시발롬')
 		2:
 			HP -= 10
 			
@@ -217,15 +226,35 @@ func passive(a):
 		2:
 			HP -= 10
 
+var hit = false
 
 
 func _on_area_2d_2_area_entered(area):
-	animationPlayer.play("hit")
-	target = area.get_parent()
-	HP -= target.attackdamage
-	delay = true
-	velocity = 1050*(position-(area.position+target.position)).normalized()
-	await get_tree().create_timer(0.2).timeout
-	velocity = Vector2(0,0)
-	await get_tree().create_timer(0.3).timeout #피격 무적시간
-	delay = false
+	if(rolling == false && hit == false):
+		hit = true
+		animationPlayer.play("hit")
+		target = area.get_parent()
+		HP -= target.attackdamage/2
+		delay = true
+		velocity = -1350*direction.normalized()
+		await get_tree().create_timer(0.15).timeout
+		velocity = Vector2(0,0)
+		await get_tree().create_timer(0.5).timeout #피격 무적시간
+		delay = false
+		await get_tree().create_timer(0.2).timeout
+		hit = false
+
+func _on_area_2d_2_area_exited(area):
+	if(rolling == false && hit == false):
+		hit = true
+		animationPlayer.play("hit")
+		target = area.get_parent()
+		HP -= target.attackdamage/2
+		delay = true
+		velocity = 1350*direction.normalized()
+		await get_tree().create_timer(0.15).timeout
+		velocity = Vector2(0,0)
+		await get_tree().create_timer(0.5).timeout #피격 무적시간
+		delay = false
+		await get_tree().create_timer(0.2).timeout
+		hit = false

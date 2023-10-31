@@ -1,10 +1,5 @@
-[gd_scene load_steps=2 format=3 uid="uid://isbq2s0rhuxr"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2rx5"]
+[gd_scene format=3 uid="uid://isbq2s0rhuxr"]
 
 [node name="hitbox" type="Area2D"]
 collision_layer = 0
 collision_mask = 0
-
-[node name="hitboxsize" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_u2rx5")

@@ -16,9 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://d3wsmgect1nes" path="res://camera_2d.tscn" id="8_p4cbs"]
 [ext_resource type="Script" path="res://attackanimation.gd" id="11_fcdkt"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cot8e"]
-radius = 98.1835
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_hhnb0"]
 animations = [{
 "frames": [{
@@ -61,11 +58,12 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qye0d"]
-size = Vector2(115, 160.988)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsyni"]
+radius = 67.0
+height = 200.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xc4au"]
 size = Vector2(41, 40.5)
@@ -86,19 +84,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s2qu8"]
+radius = 80.0
+height = 220.0
+
 [node name="player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_xms0a")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource("CircleShape2D_cot8e")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hhnb0")
-animation = &"hit"
-frame_progress = 0.88087
+animation = &"run"
 script = ExtResource("5_qlt15")
 
 [node name="Camera2D" parent="." instance=ExtResource("8_p4cbs")]
@@ -108,8 +105,8 @@ position = Vector2(0, 0)
 collision_mask = 4
 
 [node name="hurtboxsize2" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(-9, 2)
-shape = SubResource("RectangleShape2D_qye0d")
+position = Vector2(-5, -3)
+shape = SubResource("CapsuleShape2D_bsyni")
 
 [node name="Area2D" parent="." instance=ExtResource("6_epff3")]
 collision_layer = 8
@@ -123,7 +120,12 @@ script = ExtResource("7_p073o")
 sprite_frames = SubResource("SpriteFrames_vuiyv")
 script = ExtResource("11_fcdkt")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6, -6)
+shape = SubResource("CapsuleShape2D_s2qu8")
+
 [connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
+[connection signal="area_exited" from="Area2D2" to="." method="_on_area_2d_2_area_exited"]
 
 [editable path="Area2D2"]
 [editable path="Area2D"]

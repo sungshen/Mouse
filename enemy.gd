@@ -8,8 +8,9 @@ var maxHP = 10
 var delay = false
 var player = Player.player
 var attackdamage = 0
-var Countable = true
+var Countable = false
 var patternvarious = 0
+var grogi = false
 
 func ready():
 	Player.nodes.append(self)
@@ -23,24 +24,23 @@ func physics_process(delta):
 	player = Player.player
 	if(delay == false):
 		pattern(randi_range(1,patternvarious))
-		delay == true
+		delay = true
 		await get_tree().create_timer(1).timeout
-		delay == false
 
 func on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
 		HP -= player.attackdamage
 		await get_tree().create_timer(0.1).timeout
 	if(player.attackey == 30 && Countable == true):
-		HP *= 9/10
-		delay = true
+		HP -= maxHP/10
+		grogi = true
 		pattern(0)
 		await get_tree().create_timer(15).timeout
-		delay = false
+		grogi = false
 
 func death():
-	Player.nodes.pop_at(Player.nodes.find(self))
-	queue_free()
+	pass
+	#Player.nodes.pop_at(Player.nodes.find(self)) queue_free()
 
 func pattern(a):
 	pass

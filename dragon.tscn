@@ -1,57 +1,162 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgwonmnmdug1l"]
+[gd_scene load_steps=32 format=3 uid="uid://bgwonmnmdug1l"]
 
 [ext_resource type="Script" path="res://dragon.gd" id="1_ags26"]
+[ext_resource type="Texture2D" uid="uid://o5sj4uhwifw1" path="res://Sprite/Enemy/Dragon/DragonStone.png" id="2_bo8op"]
+[ext_resource type="Texture2D" uid="uid://cxmliaqoon22a" path="res://Sprite/Enemy/Dragon/DragonIdle2.png" id="3_jiipk"]
 [ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="3_yl1l4"]
+[ext_resource type="Texture2D" uid="uid://d04mb38wbftn6" path="res://Sprite/Enemy/Dragon/DragonIdle3.png" id="4_mbe1h"]
 [ext_resource type="Script" path="res://Overlap/enemyhitbox.gd" id="4_np4sp"]
-[ext_resource type="Texture2D" uid="uid://bngqet33d25wa" path="res://Sprite/Enemy/Dragon/DragonIdle.png" id="5_iwi7f"]
+[ext_resource type="Script" path="res://dragoncirclelazor.gd" id="5_ljyu6"]
+[ext_resource type="Texture2D" uid="uid://dhx6r7phbq7dt" path="res://Sprite/Enemy/Dragon/DragonIdle4.png" id="5_p6nqy"]
 [ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="5_wkxqa"]
+[ext_resource type="Texture2D" uid="uid://htdwuep1yyla" path="res://Sprite/Enemy/Dragon/DragonIdle5.png" id="6_li1vs"]
+[ext_resource type="Texture2D" uid="uid://donag5iukkhga" path="res://Sprite/Enemy/Dragon/DragonIdle6.png" id="7_odi2i"]
+[ext_resource type="Texture2D" uid="uid://mrr7s5ddq5y7" path="res://Sprite/Enemy/Dragon/DragonIdle7.png" id="8_bgwus"]
+[ext_resource type="Texture2D" uid="uid://qsqeoym6wjy2" path="res://Sprite/Enemy/Dragon/DragonIdle8.png" id="9_bcx0s"]
+[ext_resource type="Texture2D" uid="uid://c5a8vd757styn" path="res://Sprite/Enemy/Dragon/DragonIdle9.png" id="10_c2pub"]
+[ext_resource type="Texture2D" uid="uid://dxlli0sxg0t6" path="res://Sprite/Enemy/Dragon/DragonIdle10.png" id="11_l5hac"]
+[ext_resource type="Texture2D" uid="uid://d0dum6qwm6ths" path="res://Sprite/Enemy/Dragon/DragonIdle12.png" id="12_vwasg"]
+[ext_resource type="Texture2D" uid="uid://dxla4v0jm8x0h" path="res://Sprite/Enemy/Dragon/DragonIdle13.png" id="13_216uo"]
+[ext_resource type="Texture2D" uid="uid://m8iqsoxds58u" path="res://Sprite/Enemy/Dragon/DragonIdle14.png" id="14_ir2xp"]
+[ext_resource type="Texture2D" uid="uid://danng8lny1d3r" path="res://Sprite/Enemy/Dragon/DragonCircleLazor1.png" id="17_jrbn3"]
+[ext_resource type="Texture2D" uid="uid://ddu2mm1oyl3wl" path="res://Sprite/Enemy/Dragon/DragonCircleLazor2.png" id="18_mq14v"]
+[ext_resource type="Texture2D" uid="uid://beyx4om1463gs" path="res://Sprite/Enemy/Dragon/DragonCircleLazor3.png" id="19_fc4ro"]
+[ext_resource type="Texture2D" uid="uid://b3rblxqr76k5r" path="res://Sprite/Enemy/Dragon/DragonCircleLazor4.png" id="20_q1b4y"]
+[ext_resource type="Texture2D" uid="uid://bhhstdiavcptd" path="res://Sprite/Enemy/Dragon/DragonCircleLazor5.png" id="21_2q7um"]
+[ext_resource type="Script" path="res://breath.gd" id="22_2h1kx"]
+[ext_resource type="Texture2D" uid="uid://deuex1syi6n8k" path="res://Sprite/Enemy/Dragon/DragonBreath.png" id="23_uee2h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1765e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_jrbn3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_mq14v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_fc4ro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_q1b4y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_2q7um")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hffv"]
+size = Vector2(1979, 146)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_854yg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_uee2h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vn7wm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_iwi7f")
+"texture": ExtResource("2_bo8op")
+}],
+"loop": true,
+"name": &"dol",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jiipk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mbe1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p6nqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_li1vs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_odi2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bgwus")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_bcx0s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_c2pub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_l5hac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_vwasg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_216uo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ir2xp")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 2.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppdot"]
-size = Vector2(833, 50.75)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8s2pa"]
-radius = 139.0
-height = 340.0
+radius = 255.0
+height = 510.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7kcss"]
-radius = 131.0
-height = 328.0
+radius = 244.0
+height = 488.0
 
 [node name="dragon" type="CharacterBody2D"]
 collision_layer = 16
 collision_mask = 3
 script = ExtResource("1_ags26")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_vn7wm")
-animation = &"idle"
-
 [node name="hitbox" parent="." instance=ExtResource("3_yl1l4")]
 collision_layer = 4
 script = ExtResource("4_np4sp")
 
+[node name="circlelazor" type="CollisionPolygon2D" parent="hitbox"]
+scale = Vector2(500, 500)
+polygon = PackedVector2Array(-237.818, -182.008, -333.562, -110.584, -380.626, 1.968, -356.602, 144.904, -279.82, 195.828, -86.988, 248.644, 142.488, 244.09, 353.102, 143.146, 414.412, 4.23, 265.208, -116.424, 159.132, -163.784, 10.77, -200.996, -148.986, -213.24, -236.306, -180.814, -237.33, -183.63, -150.522, -216.824, 11, -205, 158, -169, 271, -120, 419.788, 5.254, 356.174, 146.218, 144, 248, -88, 251, -284.608, 197.654, -361.468, 147.022, -386.1, 0.372, -334.586, -115.704)
+script = ExtResource("5_ljyu6")
+
+[node name="circle" type="AnimatedSprite2D" parent="hitbox/circlelazor"]
+sprite_frames = SubResource("SpriteFrames_1765e")
+frame_progress = 0.4477
+
 [node name="breath" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-557, 25)
-shape = SubResource("RectangleShape2D_ppdot")
+position = Vector2(703, 787)
+rotation = 0.652753
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("RectangleShape2D_1hffv")
+script = ExtResource("22_2h1kx")
 
-[node name="thunder" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-557, 25)
-shape = SubResource("RectangleShape2D_ppdot")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="hitbox/breath"]
+position = Vector2(172.383, 7.26178)
+scale = Vector2(2.55771, 2.08257)
+sprite_frames = SubResource("SpriteFrames_854yg")
 
-[node name="tail" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-557, 25)
-shape = SubResource("RectangleShape2D_ppdot")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vn7wm")
+animation = &"dol"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(15, 43)
@@ -61,9 +166,11 @@ shape = SubResource("CapsuleShape2D_8s2pa")
 collision_mask = 8
 
 [node name="hurtboxsize" type="CollisionShape2D" parent="heartbox"]
-position = Vector2(16, 42)
+position = Vector2(19, 47)
 shape = SubResource("CapsuleShape2D_7kcss")
 
+[connection signal="breath" from="." to="hitbox/breath" method="_on_dragon_breath"]
+[connection signal="lazorcircle" from="." to="hitbox/circlelazor" method="_on_dragon_lazorcircle"]
 [connection signal="area_entered" from="heartbox" to="." method="_on_heartbox_area_entered"]
 
 [editable path="hitbox"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhmgnirrt6vsu"]
+[gd_scene load_steps=14 format=3 uid="uid://dhmgnirrt6vsu"]
 
 [ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1hw02"]
 [ext_resource type="PackedScene" uid="uid://u1r1yb6txyg4" path="res://ui.tscn" id="3_b5gph"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bmv5b0ixx1rdf" path="res://Sprite/Enemy/Dragon/DragonLightening2.png" id="6_a4gwq"]
 [ext_resource type="Texture2D" uid="uid://dtpwl3ikaei1f" path="res://Sprite/Enemy/Dragon/DragonLightening3.png" id="7_o3nel"]
 [ext_resource type="Texture2D" uid="uid://casgutn8w8uw6" path="res://Sprite/Enemy/Dragon/DragonLightening4.png" id="8_knrdh"]
+[ext_resource type="Script" path="res://arrow.gd" id="9_yud0q"]
+[ext_resource type="Texture2D" uid="uid://wgxjq4nvlpq8" path="res://Sprite/Enemy/Dragon/DragonLazor.png" id="10_2a74x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ggit"]
 size = Vector2(98, 109.5)
@@ -32,6 +34,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b831d"]
+size = Vector2(68, 21)
+
 [node name="firstmap" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_1hw02")]
@@ -55,5 +60,20 @@ script = ExtResource("4_x4fnk")
 [node name="thunder" type="AnimatedSprite2D" parent="Area2D/thunder 1"]
 position = Vector2(19, -106)
 sprite_frames = SubResource("SpriteFrames_a5k84")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(202, -1)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("9_yud0q")
+
+[node name="arrow" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(9, -2)
+shape = SubResource("RectangleShape2D_b831d")
+
+[node name="Lazor" type="Sprite2D" parent="CharacterBody2D/arrow"]
+position = Vector2(-89, 1.52588e-05)
+scale = Vector2(0.337004, 0.399174)
+texture = ExtResource("10_2a74x")
 
 [connection signal="body_entered" from="Area2D" to="Area2D/thunder 1" method="_on_area_2d_body_entered"]
