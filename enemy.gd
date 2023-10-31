@@ -8,6 +8,7 @@ var delay = false
 var player = Player.player
 var attackdamage = 0
 var Countable = true
+var patternvarious = 0
 
 func ready():
 	Player.nodes.append(self)
@@ -19,6 +20,11 @@ func physics_process(delta):
 	if(HP < 0):
 		death()
 	player = Player.player
+	if(delay == false):
+		pattern(randi_range(0,patternvarious))
+		delay == true
+		await get_tree().create_timer(1).timeout
+		delay == false
 
 func on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
