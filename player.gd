@@ -18,12 +18,12 @@ var stamina_recovery = 10
 var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[1,2,3,4,5,6],[2,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
 var EquipedWeapon = '도끼'
 # 아이템 
-var AItems = {"포션":1}
+var AItems = {"공백":0,"포션":1}
 var PItems = {"검":1,"블라스타":2}
 var icons = "res://Sprite/Icons/Items"
 # 아이템 소유 리스트
 var Item = []
-var ActiveItem = ["포션"]
+var ActiveItem = ["공백"]
 # 손에 든 아이템
 var SelectItem = 0
 # 공격 관련 변수
