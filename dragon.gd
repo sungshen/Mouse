@@ -18,8 +18,10 @@ func pattern(a):
 		1:
 			Countable == false
 		2:
+			animation.play("tailwhip")
 			Countable == false
 		3:
+			animation.play("breath")
 			Countable == true
 
 func _on_heartbox_area_entered(area):
