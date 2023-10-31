@@ -26,10 +26,6 @@ func pattern(a):
 		2:
 			Countable == false
 		3:
-			Countable == false
-		4:
-			Countable == true
-		5:
 			Countable == true
 
 func _on_heartbox_area_entered(area):
