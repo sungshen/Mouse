@@ -1,4 +1,4 @@
-extends Sprite2D
+extends ProgressBar
 
 var player = player.player
 
