@@ -14,8 +14,10 @@ func _physics_process(delta):
 func pattern(a):
 	match a:
 		0:
+			animation.play("grogi")
 			Countable == false
 		1:
+			animation.play("jump")
 			Countable == false
 		2:
 			animation.play("tailwhip")
