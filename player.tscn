@@ -1,54 +1,29 @@
-[gd_scene load_steps=26 format=3 uid="uid://bbva0j5864bwo"]
+[gd_scene load_steps=21 format=3 uid="uid://bbva0j5864bwo"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_xms0a"]
 [ext_resource type="Texture2D" uid="uid://c0oufgw5khcw4" path="res://Sprite/Player/PlayerIdle1.png" id="2_4g5xe"]
-[ext_resource type="Texture2D" uid="uid://bdmlsfhilwsub" path="res://Sprite/Player/PlayerHit.png" id="2_o1a8d"]
+[ext_resource type="Texture2D" uid="uid://bvnacnoou0iay" path="res://Sprite/Player/PlayerHit1.png" id="2_75onx"]
 [ext_resource type="Texture2D" uid="uid://vhw136k2d72k" path="res://Sprite/Player/PlayerIdle2.png" id="3_tqt2t"]
 [ext_resource type="Texture2D" uid="uid://cncjoksshr7fi" path="res://Sprite/Player/PlayerIdle3.png" id="4_aevoy"]
 [ext_resource type="Script" path="res://playersprite.gd" id="5_qlt15"]
 [ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="6_epff3"]
-[ext_resource type="Texture2D" uid="uid://cw25pxty8oyfc" path="res://Sprite/Player/PlayerRun1.png" id="6_xe4r2"]
-[ext_resource type="Texture2D" uid="uid://c7dd5blhypenw" path="res://Sprite/Player/PlayerRun2.png" id="7_gc65t"]
+[ext_resource type="Texture2D" uid="uid://dqkdijwnpa0dw" path="res://Sprite/Player/PlayerRun1.png" id="6_kugko"]
+[ext_resource type="Texture2D" uid="uid://c50epahxba5i" path="res://Sprite/Player/PlayerRun2.png" id="7_ol3oy"]
 [ext_resource type="Script" path="res://hitbox.gd" id="7_p073o"]
+[ext_resource type="Texture2D" uid="uid://ddp5b1ks2nia4" path="res://Sprite/Player/PlayerRun3.png" id="8_iyjvv"]
 [ext_resource type="Texture2D" uid="uid://b8aeo0tlqyist" path="res://검기.png" id="8_jbt78"]
 [ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="8_othj2"]
 [ext_resource type="PackedScene" uid="uid://d3wsmgect1nes" path="res://camera_2d.tscn" id="8_p4cbs"]
-[ext_resource type="Texture2D" uid="uid://do0hte4lojjsb" path="res://Sprite/Player/PlayerRun3.png" id="8_ukn8s"]
 [ext_resource type="Script" path="res://attackanimation.gd" id="11_fcdkt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cot8e"]
 radius = 98.1835
 
-[sub_resource type="Animation" id="Animation_rk67o"]
-resource_name = "attack"
-
-[sub_resource type="Animation" id="Animation_yom04"]
-resource_name = "hit"
-
-[sub_resource type="Animation" id="Animation_gpg8r"]
-resource_name = "idle"
-loop_mode = 2
-
-[sub_resource type="Animation" id="Animation_mi7tm"]
-resource_name = "roll"
-
-[sub_resource type="Animation" id="Animation_g6d8s"]
-resource_name = "run"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_45es1"]
-_data = {
-"attack": SubResource("Animation_rk67o"),
-"hit": SubResource("Animation_yom04"),
-"idle": SubResource("Animation_gpg8r"),
-"roll": SubResource("Animation_mi7tm"),
-"run": SubResource("Animation_g6d8s")
-}
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_hhnb0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_o1a8d")
+"texture": ExtResource("2_75onx")
 }],
 "loop": true,
 "name": &"hit",
@@ -73,16 +48,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_xe4r2")
+"texture": ExtResource("6_kugko")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_gc65t")
+"texture": ExtResource("7_ol3oy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_ukn8s")
+"texture": ExtResource("8_iyjvv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_gc65t")
+"texture": ExtResource("7_ol3oy")
 }],
 "loop": true,
 "name": &"run",
@@ -90,7 +65,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qye0d"]
-size = Vector2(156.344, 206.406)
+size = Vector2(115, 160.988)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xc4au"]
+size = Vector2(41, 40.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vuiyv"]
 animations = [{
@@ -117,14 +95,10 @@ script = ExtResource("1_xms0a")
 rotation = 1.5708
 shape = SubResource("CircleShape2D_cot8e")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_45es1")
-}
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hhnb0")
-animation = &"run"
+animation = &"hit"
+frame_progress = 0.88087
 script = ExtResource("5_qlt15")
 
 [node name="Camera2D" parent="." instance=ExtResource("8_p4cbs")]
@@ -134,13 +108,15 @@ position = Vector2(0, 0)
 collision_mask = 4
 
 [node name="hurtboxsize2" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(-4.17188, -2.79688)
+position = Vector2(-9, 2)
 shape = SubResource("RectangleShape2D_qye0d")
 
 [node name="Area2D" parent="." instance=ExtResource("6_epff3")]
 collision_layer = 8
 
-[node name="hitboxsize" parent="Area2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, -0.25)
+shape = SubResource("RectangleShape2D_xc4au")
 script = ExtResource("7_p073o")
 
 [node name="attackanimation" type="AnimatedSprite2D" parent="."]

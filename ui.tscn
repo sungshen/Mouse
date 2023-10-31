@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://u1r1yb6txyg4"]
+[gd_scene load_steps=15 format=3 uid="uid://u1r1yb6txyg4"]
 
 [ext_resource type="Script" path="res://ui.gd" id="1_sbg26"]
 [ext_resource type="Texture2D" uid="uid://b8aeo0tlqyist" path="res://검기.png" id="2_3xscn"]
@@ -9,6 +9,22 @@
 [ext_resource type="Script" path="res://LeftItem.gd" id="7_3okvf"]
 [ext_resource type="Script" path="res://RightItem.gd" id="8_6d33n"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opq30"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8op86"]
+bg_color = Color(0, 0.643137, 0.309804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egyie"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0fnao"]
+bg_color = Color(0.898039, 0.886275, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fcrhk"]
+bg_color = Color(0.286275, 0.286275, 0.286275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdo2e"]
+bg_color = Color(0.780392, 0, 0, 1)
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_sbg26")
 
@@ -17,6 +33,9 @@ offset_left = 1476.0
 offset_top = 759.0
 offset_right = 1793.0
 offset_bottom = 786.0
+theme_override_styles/background = SubResource("StyleBoxFlat_opq30")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8op86")
+show_percentage = false
 script = ExtResource("2_l7geb")
 
 [node name="PlayerStaminaBar" type="ProgressBar" parent="."]
@@ -24,6 +43,9 @@ offset_left = 1475.0
 offset_top = 811.0
 offset_right = 1795.0
 offset_bottom = 840.0
+theme_override_styles/background = SubResource("StyleBoxFlat_egyie")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0fnao")
+show_percentage = false
 script = ExtResource("3_beey4")
 
 [node name="TargetHPBar" type="ProgressBar" parent="."]
@@ -31,22 +53,25 @@ offset_left = 288.0
 offset_top = 52.0
 offset_right = 1625.0
 offset_bottom = 108.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fcrhk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mdo2e")
+show_percentage = false
 script = ExtResource("4_bkhh5")
-
-[node name="SelectedItem" type="Sprite2D" parent="."]
-position = Vector2(1634, 931)
-scale = Vector2(4.5303, 4.26471)
-texture = ExtResource("2_3xscn")
-script = ExtResource("6_vnt8h")
 
 [node name="LeftItem" type="Sprite2D" parent="."]
 position = Vector2(1503, 966)
-scale = Vector2(2.20455, 2.23529)
+scale = Vector2(1, 1.014)
 texture = ExtResource("2_3xscn")
 script = ExtResource("7_3okvf")
 
 [node name="RightItem" type="Sprite2D" parent="."]
 position = Vector2(1765, 964)
-scale = Vector2(2.20455, 2.23529)
+scale = Vector2(1, 1.014)
 texture = ExtResource("2_3xscn")
 script = ExtResource("8_6d33n")
+
+[node name="SelectedItem" type="Sprite2D" parent="."]
+position = Vector2(1634, 931)
+scale = Vector2(1.3, 1.318)
+texture = ExtResource("2_3xscn")
+script = ExtResource("6_vnt8h")

@@ -1,6 +1,6 @@
 extends Sprite2D
 
-var player = player.player
+var player = Player.player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,9 +9,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	player = player.player
-	texture = load(player.icons + '/' + player.ActiveItem[loop(player.SelectItem,player.len(ActiveItem))] + '.png')
-
+	player = Player.player
+	texture = load(player.icons + '/' + player.ActiveItem[player.SelectItem] + '.png')
 func loop(a,b):
 	if(a == -1):
 		return b

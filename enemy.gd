@@ -1,9 +1,10 @@
-class_name enemy
+class_name Enemy
 
 extends CharacterBody2D
 
-static var Enemy :enemy
+static var enemy :Enemy
 var HP = 10
+var maxHP = 10
 var delay = false
 var player = Player.player
 var attackdamage = 0
@@ -13,11 +14,11 @@ var patternvarious = 0
 func ready():
 	Player.nodes.append(self)
 	player = Player.new()
-	Enemy = self
+	Enemy.enemy = self
 
 func physics_process(delta):
-	Enemy = Enemy.Enemy
-	if(HP < 0):
+	enemy = Enemy.enemy
+	if(HP <= 0):
 		death()
 	player = Player.player
 	if(delay == false):
@@ -40,3 +41,6 @@ func on_heartbox_area_entered(area):
 func death():
 	Player.nodes.pop_at(Player.nodes.find(self))
 	queue_free()
+
+func pattern(a):
+	pass

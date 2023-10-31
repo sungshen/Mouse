@@ -9,13 +9,14 @@ const SPEED = 120
 const MAXSPEED = 1000.0
 # 체력 스텟
 var HP = 100
+var maxHP = 100
 # 스테미나 스텟
 var max_stamina = 100
 var current_stamina = 100
 var stamina_frozen = false
 var stamina_recovery = 10
 # 무기 리스트
-var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[1,2,3,4,5,6],[2,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
+var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[100,2,3,4,5,6],[200,4,6,8,10,12],[5,1,2,2,3,3,4,4],[1,3,2,1,5,1],[1,1,2,2,3,3,4,4],[3,3,2,1,5,1],[1,1,1,1,1,5],[1,2,2,2,3,1],[80,1,1,1,1,5],[20,2,2,2,3,1]]
 var EquipedWeapon = '도끼'
 # 아이템 
 var AItems = {"공백":0,"포션":1}
@@ -23,9 +24,10 @@ var PItems = {"검":1,"블라스타":2}
 var icons = "res://Sprite/Icons/Items"
 # 아이템 소유 리스트
 var Item = []
-var ActiveItem = ["공백"]
+var ActiveItem = ["공백","포션"]
 # 손에 든 아이템
 var SelectItem = 0
+var change = true
 # 공격 관련 변수
 var attackdir
 var HitboxLength = 0
@@ -99,31 +101,29 @@ func _physics_process(delta):
 		cam.zoom = clamp(cam.zoom,Vector2(0.3,0.3),Vector2(1,1))
 		
 	cam = Cam.cam
-
+	
+	
 	SelectItem += int(Input.is_action_just_pressed("휠업")) - int(Input.is_action_just_pressed("휠다운"))
+	SelectItem = loop(SelectItem,len(ActiveItem)-1)
+		
+	print(ActiveItem[SelectItem])
 	
-	SelectItem = loop(SelectItem,len(ActiveItem))
-	
-	if SelectItem != 0:
-		if Input.is_action_just_pressed("아이템 사용"):
-			active(ActiveItem[SelectItem-1])
+	if Input.is_action_just_pressed("아이템 사용"):
+		active(ActiveItem[SelectItem])
 	
 	attackey = clamp(attackey,0,30)
 	move_and_slide()
 	
 	#스테미나 회복
-	if(!stmina_frozen):
+	if(!stamina_frozen):
 		current_stamina=min(max_stamina,current_stamina + delta * stamina_recovery )
 	
 	if delay == true:
 		pass
 	else:	
 		direction =  get_local_mouse_position() - position * delta 
-		if mousedistance > 20:
-			if mousedistance > 25:
-				animationPlayer.play("run")
-			else:
-				animationPlayer.play("idle")
+		if mousedistance > 50:
+			animationPlayer.play("run")
 			velocity = direction.normalized() * clamp(1.5*mousedistance,SPEED,MAXSPEED)
 		else :
 			animationPlayer.play("idle")
@@ -204,6 +204,7 @@ func active(a):
 	match AItems[a]:
 		1:
 			HP += 10
+			print('시발롬')
 		2:
 			HP -= 10
 			
@@ -220,9 +221,11 @@ func passive(a):
 
 func _on_area_2d_2_area_entered(area):
 	animationPlayer.play("hit")
-	HP -= area.attackdamage
+	target = area.get_parent()
+	HP -= target.attackdamage
 	delay = true
-	velocity = 750*(position-(area.position+area.enemy.position)).normalized()
-	await get_tree().create_timer(0.1).timeout
-	delay = false
+	velocity = 1050*(position-(area.position+target.position)).normalized()
+	await get_tree().create_timer(0.2).timeout
+	velocity = Vector2(0,0)
 	await get_tree().create_timer(0.3).timeout #피격 무적시간
+	delay = false

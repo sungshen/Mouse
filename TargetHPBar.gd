@@ -1,6 +1,6 @@
 extends ProgressBar
 
-var player = player.player
+var player = Player.player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,5 +9,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	player = player.player
+	player = Player.player
+	if(player.target == null):
+		hide()
+	else :
+		show()
+		max_value = player.target.maxHP
+		value = player.target.HP
 	
