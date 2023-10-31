@@ -9,18 +9,18 @@ var player = Player.player
 var attackdamage = 0
 var Countable = true
 
-func _ready():
+func ready():
 	Player.nodes.append(self)
 	player = Player.new()
 	Enemy = self
 
-func _physics_process(delta):
+func physics_process(delta):
 	Enemy = Enemy.Enemy
 	if(HP < 0):
 		death()
 	player = Player.player
 
-func _on_heartbox_area_entered(area):
+func on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
 		HP -= player.attackdamage
 		await get_tree().create_timer(0.1).timeout
