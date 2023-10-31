@@ -10,7 +10,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	player = player.player
-	load(icons + '/' + player.aitem[loop(player.SelectItem-1,player.len(AItems))] + '.png')
+	load(icons + '/' + player.AItems[loop(player.SelectItem-1,player.len(AItems))] + '.png')
 
 func loop(a,b):
 	if(a == -1):
