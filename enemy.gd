@@ -19,6 +19,7 @@ func ready():
 
 func physics_process(delta):
 	enemy = Enemy.enemy
+	randomize()
 	if(HP <= 0):
 		death()
 	player = Player.player
