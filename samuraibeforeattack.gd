@@ -1,6 +1,5 @@
-extends Area2D
+extends Polygon2D
 
-var attackdamage = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,7 +8,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(get_parent().grogi == true):
-		scale = Vector2.ZERO
-	else:
-		scale = Vector2(1,1)
+	var alpha = 255
+	color = Color8(0,0,0,alpha)
+	alpha -= 1
+	visible = false

@@ -1,0 +1,110 @@
+[gd_scene load_steps=15 format=3 uid="uid://2qa1mrpx24fn"]
+
+[ext_resource type="Script" path="res://samurai.gd" id="1_8wt0l"]
+[ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="2_yrgij"]
+[ext_resource type="Script" path="res://Overlap/enemyhitbox.gd" id="3_jyvo4"]
+[ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="4_shkxa"]
+[ext_resource type="Texture2D" uid="uid://b2101vr5ufn6j" path="res://Sprite/Enemy/Samurai/SamuraiCounter5.png" id="5_xumsa"]
+[ext_resource type="Texture2D" uid="uid://3olu2fbea7xd" path="res://Sprite/Enemy/Samurai/SamuraiCounter1.png" id="6_qf0j6"]
+[ext_resource type="Texture2D" uid="uid://cvlotl7nnn7is" path="res://Sprite/Enemy/Samurai/SamuraiCounter2.png" id="7_2apsm"]
+[ext_resource type="Texture2D" uid="uid://cjyien4qcxvys" path="res://Sprite/Enemy/Samurai/SamuraiCounter3.png" id="8_8fta2"]
+[ext_resource type="Texture2D" uid="uid://dntvrq0q5jfrc" path="res://Sprite/Enemy/Samurai/SamuraiCounter4.png" id="9_qigwf"]
+[ext_resource type="Texture2D" uid="uid://bvi4wlxrgrgl3" path="res://Sprite/Enemy/Samurai/SamuraiDownSlash.png" id="10_7f4gf"]
+[ext_resource type="Texture2D" uid="uid://dfew7enhufu1t" path="res://Sprite/Enemy/Samurai/SamuraiIdle.png" id="10_rwk71"]
+[ext_resource type="Script" path="res://samuraibeforeattack.gd" id="11_oqs77"]
+[ext_resource type="Script" path="res://samuraianimtaion.gd" id="11_r880l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_stewd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xumsa")
+}],
+"loop": true,
+"name": &"conter_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_qf0j6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2apsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8fta2")
+}, {
+"duration": 50.0,
+"texture": ExtResource("9_qigwf")
+}],
+"loop": true,
+"name": &"counter",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_7f4gf")
+}],
+"loop": true,
+"name": &"downslash",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hekirekiisen",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_rwk71")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"sideattack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"upslash",
+"speed": 5.0
+}]
+
+[node name="samurai" type="CharacterBody2D"]
+script = ExtResource("1_8wt0l")
+
+[node name="hitbox" parent="." instance=ExtResource("2_yrgij")]
+script = ExtResource("3_jyvo4")
+
+[node name="hurtbox" parent="." instance=ExtResource("4_shkxa")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_stewd")
+animation = &"idle"
+script = ExtResource("11_r880l")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(987, 257)
+scale = Vector2(1.04374, 1.33352)
+polygon = PackedVector2Array(-562.446, 24.0004, -324.838, 228.721, -16.2876, 350.2, 312.339, 236.216, 562.402, 41.994, -10.539, 98.236, -356.411, 50.0602)
+script = ExtResource("11_oqs77")
+
+[connection signal="dash" from="." to="AnimatedSprite2D" method="_on_samurai_dash"]
+[connection signal="hekilekiisen" from="." to="AnimatedSprite2D" method="_on_samurai_hekilekiisen"]
+[connection signal="sideslash" from="." to="AnimatedSprite2D" method="_on_samurai_sideslash"]
+
+[editable path="hitbox"]
+[editable path="hurtbox"]
