@@ -23,8 +23,8 @@ var AItems = {"공백":0,"포션":1}
 var PItems = {"검":1,"블라스타":2}
 var icons = "res://Sprite/Icons/Items"
 # 아이템 소유 리스트
-var Item = []
-var ActiveItem = ["공백","포션"]
+var Item = Global.Item
+var ActiveItem = Global.ActiveItem
 # 손에 든 아이템
 var SelectItem = 0
 var change = true
@@ -93,7 +93,6 @@ func distance(first:Vector2,second:Vector2):
 func _physics_process(delta):
 	direction =  get_local_mouse_position() - position * delta
 	mousedistance = sqrt(pow(direction.x,2) + pow(direction.y,2))
-	
 	if HP <= 0:
 		queue_free()
 	player = Player.player
@@ -231,6 +230,7 @@ var hit = false
 
 func _on_area_2d_2_area_entered(area):
 	if(rolling == false && hit == false):
+		cam.shake_amount = 10
 		hit = true
 		animationPlayer.play("hit")
 		target = area.get_parent()
@@ -239,6 +239,7 @@ func _on_area_2d_2_area_entered(area):
 		velocity = -1350*direction.normalized()
 		await get_tree().create_timer(0.15).timeout
 		velocity = Vector2(0,0)
+		cam.shake_amount = 0
 		await get_tree().create_timer(0.5).timeout #피격 무적시간
 		delay = false
 		await get_tree().create_timer(0.2).timeout
@@ -246,6 +247,7 @@ func _on_area_2d_2_area_entered(area):
 
 func _on_area_2d_2_area_exited(area):
 	if(rolling == false && hit == false):
+		cam.shake_amount = 10
 		hit = true
 		animationPlayer.play("hit")
 		target = area.get_parent()
@@ -254,7 +256,13 @@ func _on_area_2d_2_area_exited(area):
 		velocity = 1350*direction.normalized()
 		await get_tree().create_timer(0.15).timeout
 		velocity = Vector2(0,0)
+		cam.shake_amount = 0
 		await get_tree().create_timer(0.5).timeout #피격 무적시간
 		delay = false
 		await get_tree().create_timer(0.2).timeout
 		hit = false
+		
+
+
+func _on_door_body_entered(body):
+	Global.goto_scene("res://map"+str(Global.scene_number))

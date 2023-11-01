@@ -1,0 +1,72 @@
+[gd_scene load_steps=13 format=3 uid="uid://cyhgjxqby6gdl"]
+
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1hw02"]
+[ext_resource type="PackedScene" uid="uid://u1r1yb6txyg4" path="res://ui.tscn" id="3_b5gph"]
+[ext_resource type="PackedScene" uid="uid://bgwonmnmdug1l" path="res://dragon.tscn" id="3_kn33p"]
+[ext_resource type="Script" path="res://thunder 1.gd" id="4_x4fnk"]
+[ext_resource type="Texture2D" uid="uid://bjsntc3d55qa0" path="res://Sprite/Enemy/Dragon/DragonLightening1.png" id="5_g2hik"]
+[ext_resource type="Texture2D" uid="uid://bmv5b0ixx1rdf" path="res://Sprite/Enemy/Dragon/DragonLightening2.png" id="6_a4gwq"]
+[ext_resource type="Texture2D" uid="uid://dtpwl3ikaei1f" path="res://Sprite/Enemy/Dragon/DragonLightening3.png" id="7_o3nel"]
+[ext_resource type="Texture2D" uid="uid://casgutn8w8uw6" path="res://Sprite/Enemy/Dragon/DragonLightening4.png" id="8_knrdh"]
+[ext_resource type="Script" path="res://door.gd" id="9_kspda"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ggit"]
+size = Vector2(26, 25.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5k84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_g2hik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_a4gwq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_o3nel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_knrdh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubms6"]
+size = Vector2(225.5, 505)
+
+[node name="map1" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_1hw02")]
+metadata/NPC = []
+
+[node name="UI" parent="." instance=ExtResource("3_b5gph")]
+
+[node name="dragon" parent="." instance=ExtResource("3_kn33p")]
+position = Vector2(2200, -1424)
+scale = Vector2(2, 2)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="thunder 1" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3ggit")
+script = ExtResource("4_x4fnk")
+
+[node name="thunder" type="AnimatedSprite2D" parent="Area2D/thunder 1"]
+position = Vector2(19, -106)
+sprite_frames = SubResource("SpriteFrames_a5k84")
+
+[node name="door" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("9_kspda")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
+position = Vector2(7143, -2)
+shape = SubResource("RectangleShape2D_ubms6")
+
+[connection signal="body_entered" from="Area2D" to="Area2D/thunder 1" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="door" to="player" method="_on_door_body_entered"]

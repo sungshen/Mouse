@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://lln8kpx83x1g"]
+
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_f55bi"]
+[ext_resource type="PackedScene" uid="uid://u1r1yb6txyg4" path="res://ui.tscn" id="2_fw7i7"]
+[ext_resource type="Script" path="res://door.gd" id="3_wk4c8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1lqun"]
+size = Vector2(225.5, 505)
+
+[node name="map2" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_f55bi")]
+position = Vector2(750, 283)
+metadata/NPC = []
+
+[node name="UI" parent="." instance=ExtResource("2_fw7i7")]
+
+[node name="door" type="Area2D" parent="."]
+position = Vector2(91, 293)
+script = ExtResource("3_wk4c8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
+shape = SubResource("RectangleShape2D_1lqun")

@@ -11,38 +11,54 @@ var attackdamage = 0
 var Countable = false
 var patternvarious = 0
 var grogi = false
+var currentpattern = 0
+var selectedpattern
+var die = false
 
-func ready():
+func _ready():
 	Player.nodes.append(self)
 	player = Player.new()
 	Enemy.enemy = self
+	position = clamp(position,Vector2(),Vector2())
 
-func physics_process(delta):
-	enemy = Enemy.enemy
+func _physics_process(delta):
 	randomize()
-	if(HP <= 0):
-		death()
+	enemy = Enemy.enemy
 	player = Player.player
-	if(delay == false):
-		pattern(randi_range(1,patternvarious))
+	if(delay == false && grogi == false):
+		selectedpattern = randi_range(1,patternvarious)
+		while(selectedpattern == currentpattern):
+			selectedpattern = randi_range(1,patternvarious)
+		pattern(selectedpattern)
 		delay = true
 		await get_tree().create_timer(1).timeout
-	position = clamp(position,Vector2(0,0),Vector2(0,0)
 
-func on_heartbox_area_entered(area):
+func _on_heartbox_area_entered(area):
+	
 	if(player.attackdamage > 0):
 		HP -= player.attackdamage
+		if(player.attackey == 30):
+			player.cam.shake_amount = 15
+		else:
+			player.cam.shake_amount = 5
 		await get_tree().create_timer(0.1).timeout
+		player.cam.shake_amount = 0
 	if(player.attackey == 30 && Countable == true):
 		HP -= maxHP/10
 		grogi = true
 		pattern(0)
 		await get_tree().create_timer(15).timeout
 		grogi = false
+	if(HP <= 0 && die == false):
+		death()
 
 func death():
-	pass
-	#Player.nodes.pop_at(Player.nodes.find(self)) queue_free()
+	grogi = true
+	die = true
+	player.cam.shake_amount = 15
+	await get_tree().create_timer(1).timeout
+	player.cam.shake_amount = 0
+	Player.nodes.pop_at(Player.nodes.find(self))
 
 func pattern(a):
-	pass
+	currentpattern = a

@@ -10,21 +10,23 @@ signal lazor
 signal thunder
 
 func _ready():
+	super()
 	Dragon.dragon = self
-	ready()
 	patternvarious = 4
 	HP = 1500
 	maxHP = 1500
-	attackdamage = 10
+	attackdamage = 20
 	
 
 func _physics_process(delta):
-	physics_process(delta)
+	super(delta)
 	
 	
 	
 		
 func pattern(a):
+	super(a)
+	
 	match a:
 		0:
 			Countable == false
@@ -32,6 +34,7 @@ func pattern(a):
 		1:
 			animation.play("dol")
 			Countable == true
+			attackdamage = 20
 			await get_tree().create_timer(3).timeout
 			emit_signal("lazorcircle")
 			await get_tree().create_timer(3).timeout
@@ -43,7 +46,8 @@ func pattern(a):
 			position = player.position + Vector2(-1000,-1000)
 			animation.play("idle")
 			Countable == false
-			await get_tree().create_timer(2).timeout
+			await get_tree().create_timer(1).timeout
+			attackdamage = 25
 			emit_signal("breath")
 			await get_tree().create_timer(3).timeout
 			delay = false
@@ -52,6 +56,7 @@ func pattern(a):
 			animation.play("idle")
 			Countable == false
 			await get_tree().create_timer(1).timeout
+			attackdamage = 25
 			emit_signal("breath")
 			await get_tree().create_timer(3).timeout
 			delay = false
@@ -59,6 +64,7 @@ func pattern(a):
 			position = player.position - Vector2(-1000,-1000)
 			animation.play("dol")
 			Countable == true
+			attackdamage = 20
 			await get_tree().create_timer(1).timeout
 			emit_signal("lazorcircle")
 			await get_tree().create_timer(3).timeout
@@ -70,8 +76,9 @@ func pattern(a):
 			
 
 func _on_heartbox_area_entered(area):
-	on_heartbox_area_entered(area)
+	super(area)
 
 func death():
+	super()
 	animation.play("dol")
-	delay = true
+	

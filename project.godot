@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="mouse"
-run/main_scene="res://firstmap.tscn"
+run/main_scene="res://map1.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
+
+[autoload]
+
+Global="*res://Global.tscn"
 
 [display]
 

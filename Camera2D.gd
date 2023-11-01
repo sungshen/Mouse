@@ -14,8 +14,7 @@ func _ready():
 	
 
 	
+var shake_amount = 0
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	set_offset(Vector2(randf_range(-1.0, 1.0) * shake_amount,randf_range(-1.0, 1.0) * shake_amount))
