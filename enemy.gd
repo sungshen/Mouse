@@ -26,6 +26,7 @@ func physics_process(delta):
 		pattern(randi_range(1,patternvarious))
 		delay = true
 		await get_tree().create_timer(1).timeout
+	position = clamp(position,Vector2(0,0),Vector2(0,0)
 
 func on_heartbox_area_entered(area):
 	if(player.attackdamage > 0):
