@@ -43,13 +43,22 @@ func pattern(a):
 			pos = player.position + Vector2(randf_range(-250,250),randf_range(-250,250))
 			velocity = (pos - position).normalized() * 2500
 			move_and_slide()
-			emit_signal("dash")
+			await get_tree().create_timer(sqrt(pow(player.x-self.x,2) + pow(player.y-self.y,2))/2500 + 1/5).timeout
+			delay = false
 		2:
 			animation.play("jump")
-			await get_tree().create_timer(1).timeout
+			await get_tree().create_timer(2).timeout
 			position = player.position
+			await get_tree().create_timer(0.5).timeout
 			Countable == false
 			emit_signal("jump")
+			if(HP < maxHP/2):
+				animation.play("hekirekiisen")
+				velocity = (player.position - position).normalized() * 5000
+				move_and_slide()
+				emit_signal("hekilekiisen")
+			await get_tree().create_timer(1).timeout
+			delay = false
 		3:
 			animation.play("hekirekiisen")
 			Countable == false
@@ -58,7 +67,7 @@ func pattern(a):
 			for i in range(randi_range(0,2)):
 				emit_signal("hekilekiisen")
 				await get_tree().create_timer(0.5).timeout
-			await get_tree().create_timer(3).timeout
+			await get_tree().create_timer(1).timeout
 			delay = false
 		4:
 			animation.play("counter")
