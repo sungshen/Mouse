@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmesvklydi5vi"
-path="res://.godot/imported/DragonIdle14.png-3a9d5b80cba4c79cc862a281f2253dc4.ctex"
+uid="uid://x1q1a1wlfbe0"
+path="res://.godot/imported/SamuraiSideSlash1.png-bbfe6f3564bbd2f05666cf6edd2e2526.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/Enemy/Dragon/DragonIdle14.png"
-dest_files=["res://.godot/imported/DragonIdle14.png-3a9d5b80cba4c79cc862a281f2253dc4.ctex"]
+source_file="res://Sprite/Enemy/Samurai/SamuraiSideSlash1.png"
+dest_files=["res://.godot/imported/SamuraiSideSlash1.png-bbfe6f3564bbd2f05666cf6edd2e2526.ctex"]
 
 [params]
 

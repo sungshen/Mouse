@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmesvklydi5vi"
-path="res://.godot/imported/DragonIdle14.png-3a9d5b80cba4c79cc862a281f2253dc4.ctex"
+uid="uid://gqwywyom61te"
+path="res://.godot/imported/SamuraiGrogi.png-1d0c4bd2fae4576a661d78799ab41c5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/Enemy/Dragon/DragonIdle14.png"
-dest_files=["res://.godot/imported/DragonIdle14.png-3a9d5b80cba4c79cc862a281f2253dc4.ctex"]
+source_file="res://Sprite/Enemy/Samurai/SamuraiGrogi.png"
+dest_files=["res://.godot/imported/SamuraiGrogi.png-1d0c4bd2fae4576a661d78799ab41c5e.ctex"]
 
 [params]
 
