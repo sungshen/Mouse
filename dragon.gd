@@ -75,10 +75,11 @@ func pattern(a):
 			
 			
 
-func _on_heartbox_area_entered(area):
-	super(area)
-
 func death():
 	super()
 	animation.play("dol")
 	
+
+
+func _on_hurtbox_area_entered(area):
+	super(area)

@@ -1,26 +1,112 @@
-[gd_scene load_steps=6 format=3 uid="uid://lln8kpx83x1g"]
+[gd_scene load_steps=15 format=3 uid="uid://cyhgjxqby6gdl"]
 
 [ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_f55bi"]
+[ext_resource type="Texture2D" uid="uid://cafdhihrubhmc" path="res://Sprite/map.png" id="1_viqa8"]
 [ext_resource type="PackedScene" uid="uid://u1r1yb6txyg4" path="res://ui.tscn" id="2_fw7i7"]
 [ext_resource type="Script" path="res://door.gd" id="3_wk4c8"]
-[ext_resource type="PackedScene" uid="uid://2qa1mrpx24fn" path="res://samurai.tscn" id="4_u6khp"]
+[ext_resource type="PackedScene" uid="uid://bgwonmnmdug1l" path="res://dragon.tscn" id="4_mjyii"]
+[ext_resource type="Script" path="res://thunder 1.gd" id="5_j4w13"]
+[ext_resource type="Texture2D" uid="uid://bjsntc3d55qa0" path="res://Sprite/Enemy/Dragon/DragonLightening1.png" id="6_ifulx"]
+[ext_resource type="Texture2D" uid="uid://bmv5b0ixx1rdf" path="res://Sprite/Enemy/Dragon/DragonLightening2.png" id="7_reim2"]
+[ext_resource type="Texture2D" uid="uid://dtpwl3ikaei1f" path="res://Sprite/Enemy/Dragon/DragonLightening3.png" id="8_v3k2r"]
+[ext_resource type="Texture2D" uid="uid://casgutn8w8uw6" path="res://Sprite/Enemy/Dragon/DragonLightening4.png" id="9_qpk4s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1lqun"]
-size = Vector2(225.5, 505)
+[sub_resource type="GDScript" id="GDScript_qfjqu"]
+script/source = "extends Node2D
 
-[node name="map2" type="Node2D"]
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+# Remove the current level
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ggit"]
+size = Vector2(26, 25.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5k84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ifulx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_reim2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_v3k2r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qpk4s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubms6"]
+size = Vector2(800.125, 505)
+
+[node name="map1" type="Node2D"]
+self_modulate = Color(0, 0, 0, 1)
+script = SubResource("GDScript_qfjqu")
+
+[node name="map" type="StaticBody2D" parent="."]
+position = Vector2(-3, 31)
+scale = Vector2(0.992399, 0.994921)
+collision_layer = 257
+collision_mask = 257
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map"]
+polygon = PackedVector2Array(-5333.54, 2979.13, 2011, 3010, 5445, 3004, 5404, -3051, -5419.19, -3005.26, -5367.8, 2979.13, -8717.26, 3195.23, -9954.67, -7692.06, 11876.3, -9070.06, 15612.7, 9948.52, -33.2528, 4289.79, -5317.42, 3705.82, -8797.87, 3822.41, -9368.21, 3216.33)
+
+[node name="mapimage" type="Sprite2D" parent="."]
+modulate = Color(0.619608, 0.619608, 0.619608, 1)
+scale = Vector2(12, 12)
+texture = ExtResource("1_viqa8")
 
 [node name="player" parent="." instance=ExtResource("1_f55bi")]
-position = Vector2(750, 283)
+position = Vector2(-5000, 0)
 metadata/NPC = []
 
 [node name="UI" parent="." instance=ExtResource("2_fw7i7")]
 
+[node name="dragon" parent="." instance=ExtResource("4_mjyii")]
+scale = Vector2(2, 2)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="thunder 1" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3ggit")
+script = ExtResource("5_j4w13")
+
+[node name="thunder" type="AnimatedSprite2D" parent="Area2D/thunder 1"]
+position = Vector2(19, -106)
+sprite_frames = SubResource("SpriteFrames_a5k84")
+
 [node name="door" type="Area2D" parent="."]
-position = Vector2(91, 293)
+position = Vector2(14537, -1457)
+collision_mask = 3
 script = ExtResource("3_wk4c8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
-shape = SubResource("RectangleShape2D_1lqun")
+position = Vector2(23, -47)
+shape = SubResource("RectangleShape2D_ubms6")
 
-[node name="samurai" parent="." instance=ExtResource("4_u6khp")]
+[node name="Polygon2D2" type="Polygon2D" parent="door"]
+position = Vector2(-1552, -22)
+scale = Vector2(1.22036, 1.29113)
+color = Color(0.490196, 0, 0.490196, 1)
+polygon = PackedVector2Array(1504, -218, 1079, -216, 1079, 136.942, 1079, 218, 1514, 235)
+
+[connection signal="stage_end" from="player" to="door" method="_on_player_stage_end"]
+[connection signal="body_entered" from="Area2D" to="Area2D/thunder 1" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="door" to="player" method="_on_door_body_entered"]

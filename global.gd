@@ -1,14 +1,11 @@
 extends Node
 
-var Item = []
-var ActiveItem = ["공백"]
-
 var current_scene = null
-var scene_number = 1
-
+var scene_number = 2
+var time = 0
 
 func _ready():
-	var root = get_tree().root
+	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 
 func goto_scene(path):
@@ -21,7 +18,7 @@ func goto_scene(path):
 	# The solution is to defer the load to a later time, when
 	# we can be sure that no code from the current scene is running:
 	scene_number += 1
-	call_deferred("_deferred_goto_scene", path)
+	call_deferred("_deferred_goto_scene",path)
 
 
 func _deferred_goto_scene(path):
@@ -38,4 +35,7 @@ func _deferred_goto_scene(path):
 	get_tree().root.add_child(current_scene)
 
 	# Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
-	get_tree().current_scene = current_scene
+	get_tree().set_current_scene(current_scene)
+
+func _process(delta):
+	time += delta

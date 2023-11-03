@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://2qa1mrpx24fn"]
+[gd_scene load_steps=24 format=3 uid="uid://2qa1mrpx24fn"]
 
 [ext_resource type="Script" path="res://samurai.gd" id="1_8wt0l"]
 [ext_resource type="PackedScene" uid="uid://isbq2s0rhuxr" path="res://Overlap/hitbox.tscn" id="2_yrgij"]
 [ext_resource type="Script" path="res://Overlap/enemyhitbox.gd" id="3_jyvo4"]
+[ext_resource type="Script" path="res://samuraislash.gd" id="4_rxfgo"]
 [ext_resource type="PackedScene" uid="uid://b8rdb46b3fdl3" path="res://Overlap/hurtbox.tscn" id="4_shkxa"]
 [ext_resource type="Texture2D" uid="uid://b2101vr5ufn6j" path="res://Sprite/Enemy/Samurai/SamuraiCounter5.png" id="5_xumsa"]
 [ext_resource type="Texture2D" uid="uid://3olu2fbea7xd" path="res://Sprite/Enemy/Samurai/SamuraiCounter1.png" id="6_qf0j6"]
@@ -13,6 +14,18 @@
 [ext_resource type="Texture2D" uid="uid://dfew7enhufu1t" path="res://Sprite/Enemy/Samurai/SamuraiIdle.png" id="10_rwk71"]
 [ext_resource type="Script" path="res://samuraibeforeattack.gd" id="11_oqs77"]
 [ext_resource type="Script" path="res://samuraianimtaion.gd" id="11_r880l"]
+[ext_resource type="Texture2D" uid="uid://gqwywyom61te" path="res://Sprite/Enemy/Samurai/SamuraiGrogi.png" id="13_surfy"]
+[ext_resource type="Texture2D" uid="uid://x1q1a1wlfbe0" path="res://Sprite/Enemy/Samurai/SamuraiSideSlash1.png" id="14_wu8n3"]
+[ext_resource type="Texture2D" uid="uid://uv2c1gcrfl1p" path="res://Sprite/Enemy/Samurai/SamuraiSideSlash2.png" id="15_su2f7"]
+[ext_resource type="Texture2D" uid="uid://d1ccdjylpjv58" path="res://Sprite/Enemy/Samurai/SamuraiSideSlash3.png" id="16_njfj1"]
+[ext_resource type="Texture2D" uid="uid://cre12x36114kx" path="res://Sprite/Enemy/Samurai/SamuraiUpSlash.png" id="18_hxd68"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kkjc4"]
+size = Vector2(409, 403)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gen3k"]
+radius = 88.0
+height = 378.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_stewd"]
 animations = [{
@@ -54,6 +67,14 @@ animations = [{
 "name": &"downslash",
 "speed": 5.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_surfy")
+}],
+"loop": true,
+"name": &"grogi",
+"speed": 5.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"hekirekiisen",
@@ -72,39 +93,86 @@ animations = [{
 "name": &"jump",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 2.5,
+"texture": ExtResource("14_wu8n3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_su2f7")
+}, {
+"duration": 30.0,
+"texture": ExtResource("16_njfj1")
+}],
 "loop": true,
 "name": &"sideattack",
-"speed": 5.0
+"speed": 10.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_hxd68")
+}],
 "loop": true,
 "name": &"upslash",
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xmls8"]
+radius = 102.0
+height = 400.0
+
 [node name="samurai" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 2
+safe_margin = 4.91
 script = ExtResource("1_8wt0l")
 
+[node name="jansang" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-1876.9, 74.2396, -331.5, 90.7373, -26.1395, 98.9861, 259.643, 90.7373, 2505.41, 44.9937, -23.9523, 47.9933, -356.411, 50.0602)
+script = ExtResource("11_oqs77")
+
 [node name="hitbox" parent="." instance=ExtResource("2_yrgij")]
+collision_layer = 4
 script = ExtResource("3_jyvo4")
 
+[node name="slash" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(4, -1)
+shape = SubResource("RectangleShape2D_kkjc4")
+script = ExtResource("4_rxfgo")
+
 [node name="hurtbox" parent="." instance=ExtResource("4_shkxa")]
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("CapsuleShape2D_gen3k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_stewd")
-animation = &"idle"
+animation = &"upslash"
 script = ExtResource("11_r880l")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(987, 257)
-scale = Vector2(1.04374, 1.33352)
-polygon = PackedVector2Array(-562.446, 24.0004, -324.838, 228.721, -16.2876, 350.2, 312.339, 236.216, 562.402, 41.994, -10.539, 98.236, -356.411, 50.0602)
-script = ExtResource("11_oqs77")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_xmls8")
 
+[connection signal="counter" from="." to="hitbox/slash" method="_on_samurai_counter"]
+[connection signal="dash" from="." to="jansang" method="_on_samurai_dash"]
+[connection signal="dash" from="." to="hitbox/slash" method="_on_samurai_dash"]
 [connection signal="dash" from="." to="AnimatedSprite2D" method="_on_samurai_dash"]
+[connection signal="discardhitbox" from="." to="jansang" method="_on_samurai_discardhitbox"]
+[connection signal="discardhitbox" from="." to="hitbox/slash" method="_on_samurai_discardhitbox"]
+[connection signal="downslash" from="." to="jansang" method="_on_samurai_downslash"]
+[connection signal="downslash" from="." to="hitbox/slash" method="_on_samurai_downslash"]
+[connection signal="hekilekiisen" from="." to="jansang" method="_on_samurai_hekilekiisen"]
+[connection signal="hekilekiisen" from="." to="hitbox/slash" method="_on_samurai_hekilekiisen"]
 [connection signal="hekilekiisen" from="." to="AnimatedSprite2D" method="_on_samurai_hekilekiisen"]
+[connection signal="jump" from="." to="jansang" method="_on_samurai_jump"]
+[connection signal="jump" from="." to="hitbox/slash" method="_on_samurai_jump"]
+[connection signal="sideslash" from="." to="jansang" method="_on_samurai_sideslash"]
+[connection signal="sideslash" from="." to="hitbox/slash" method="_on_samurai_sideslash"]
 [connection signal="sideslash" from="." to="AnimatedSprite2D" method="_on_samurai_sideslash"]
+[connection signal="upslash" from="." to="jansang" method="_on_samurai_upslash"]
+[connection signal="upslash" from="." to="hitbox/slash" method="_on_samurai_upslash"]
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 
 [editable path="hitbox"]
 [editable path="hurtbox"]

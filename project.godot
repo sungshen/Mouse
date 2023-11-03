@@ -13,10 +13,12 @@ config_version=5
 config/name="mouse"
 run/main_scene="res://map1.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
+config/icon="res://Sprite/Player/PlayerHit1.png"
 
 [autoload]
 
 Global="*res://Global.tscn"
+Inventory="*res://inventory.gd"
 
 [display]
 
@@ -63,5 +65,6 @@ mouse_cursor/custom_image="res://커서.png"
 
 [rendering]
 
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/screen_space_aa=1

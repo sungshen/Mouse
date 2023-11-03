@@ -6,7 +6,6 @@ static var cam: Cam
 
 var player = Player.player
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var player = Player.new()

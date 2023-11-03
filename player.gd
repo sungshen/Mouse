@@ -4,6 +4,7 @@ extends CharacterBody2D
 static var player: Player
 static var node: Node
 static var nodes: Array[Node] = []
+var scene_number = 1
 # 속도 스텟
 const SPEED = 120
 const MAXSPEED = 1000.0
@@ -16,20 +17,20 @@ var current_stamina = 100
 var stamina_frozen = false
 var stamina_recovery = 10
 # 무기 리스트
-var Weapon = [['도끼','검','단검','블라스타','화염방사기','성신의 손톱'],[10,2,3,4,5,6],[25,4,6,8,10,12],[4,1,2,2,3,3,4,4],[1,3,2,1,5,1],[3,1,2,2,3,3,4,4],[3,3,2,1,5,1],[30,1,1,1,1,5],[20,2,2,2,3,1],[40,1,1,1,1,5],[60,2,2,2,3,1]]
-var EquipedWeapon = '도끼'
+var Weapon = Inventory.Weapon
+var EquipedWeapon = Inventory.EquipedWeapon
 # 아이템 
-var AItems = {"공백":0,"포션":1}
-var PItems = {"검":1,"블라스타":2}
-var icons = "res://Sprite/Icons/Items"
+var AItems = Inventory.AItems
+var PItems = Inventory.PItems
+var icons = Inventory.Icons
 # 아이템 소유 리스트
-var Item = Global.Item
-var ActiveItem = Global.ActiveItem
+var Item = Inventory.Item
+var ActiveItem = Inventory.ActiveItem
 # 손에 든 아이템
 var SelectItem = 0
 var change = true
 # 공격 관련 변수
-var attackdir
+var attackdir = Vector2.ZERO
 var HitboxLength = 0
 var HitboxWidth = 0
 var attackdamage = 0
@@ -51,13 +52,15 @@ var cam = Cam.cam
 
 var mousedistance
 var direction
+var stage_cleared = false
+signal stage_end
 
 func _enter_tree():
+	stage_cleared = false
 	for i in range(11):
 		status.append(Weapon[i][Weapon[0].find(EquipedWeapon)])
 	for i in Item:
 		passive(i)
-	print(status)
 
 func sum(arr:Array):
 	var result = Vector2.ZERO
@@ -94,16 +97,20 @@ func _physics_process(delta):
 	direction =  get_local_mouse_position() - position * delta
 	mousedistance = sqrt(pow(direction.x,2) + pow(direction.y,2))
 	if HP <= 0:
-		queue_free()
+		get_tree().paused = true
+		print(Global.time)
+		print(Global.scene_number)
 	player = Player.player
 	distance(cam.position*delta,position*delta)
-	if(distance(position,(sum(nodes)+position)/(len(nodes)+1)) > 2000):
-		cam.position = Vector2.ZERO
+	if(stage_cleared == false):
+		if(distance(position,(sum(nodes)+position)/(len(nodes)+1)) > 2000):
+			cam.position = Vector2.ZERO
+		else:
+			cam.position = (sum(nodes)+position)/(len(nodes)+1) - position
+			cam.zoom = Vector2(sqrt(sqrt(50/distance(cam.position,Vector2.ZERO))), sqrt(sqrt(50/distance(cam.position,Vector2.ZERO))))
+			cam.zoom = clamp(cam.zoom,Vector2(0.3,0.3),Vector2(1,1))
 	else:
-		cam.position = (sum(nodes)+position)/(len(nodes)+1) - position
-		cam.zoom = Vector2(sqrt(sqrt(50/distance(cam.position,Vector2.ZERO))), sqrt(sqrt(50/distance(cam.position,Vector2.ZERO))))
-		cam.zoom = clamp(cam.zoom,Vector2(0.3,0.3),Vector2(1,1))
-		
+		cam.position = -position/2
 	cam = Cam.cam
 	
 	current_stamina = clamp(current_stamina,0,max_stamina)
@@ -141,12 +148,18 @@ func _physics_process(delta):
 			attackdir = direction.normalized()
 			target = null
 		
+		if(len(nodes) == 0):
+			stage_cleared = true
+			emit_signal("stage_end")
+		
 		#구르기 쿨타임
 		if rolling_cooldown > 0 :
 			rolling_cooldown -= delta
 		else:
 			rolling_cooldown = 0
-
+		
+		if(stage_cleared == true):
+			target == null
 
 		# 구르기 입력을 받았을 때 구르기 쿨타임이 끝났고, 현제 스테미너가 충분할 때 구르기 동작을 실행합니다.
 		if Input.is_action_just_pressed("구르기") and (rolling_cooldown == 0) and (current_stamina > 30):
@@ -230,6 +243,9 @@ var hit = false
 
 func _on_area_2d_2_area_entered(area):
 	if(rolling == false && hit == false):
+		attackdamage = 0
+		HitboxLength = 0
+		HitboxWidth = 0
 		cam.shake_amount = 10
 		hit = true
 		animationPlayer.play("hit")
@@ -247,6 +263,9 @@ func _on_area_2d_2_area_entered(area):
 
 func _on_area_2d_2_area_exited(area):
 	if(rolling == false && hit == false):
+		attackdamage = 0
+		HitboxLength = 0
+		HitboxWidth = 0
 		cam.shake_amount = 10
 		hit = true
 		animationPlayer.play("hit")
@@ -265,4 +284,6 @@ func _on_area_2d_2_area_exited(area):
 
 
 func _on_door_body_entered(body):
-	Global.goto_scene("res://map"+str(Global.scene_number))
+	nodes = []
+	Global.goto_scene("res://map" + str(Global.scene_number) + ".tscn")
+	

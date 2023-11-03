@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cajf0ubcjhtbn"]
+[gd_scene load_steps=3 format=3 uid="uid://u6aivlgrqbwt"]
 
-[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1hw02"]
-[ext_resource type="Script" path="res://door.gd" id="9_kspda"]
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="1_1bpbt"]
+[ext_resource type="Script" path="res://door.gd" id="2_yh8kc"]
 
-[node name="map1" type="Node2D"]
+[node name="map3" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -15,12 +15,12 @@ polygon = PackedVector2Array(88, -207, -265, -1, 82, 195, -359, 29, -38, -254, 2
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-557, -40, 1471, -812, 1469.07, -39.244, 1467, 790, 2488, 913, 2533, -884, 691, -1034, -1135, 88, 1449, 718)
 
-[node name="player" parent="." instance=ExtResource("1_1hw02")]
+[node name="player" parent="." instance=ExtResource("1_1bpbt")]
 
 [node name="door" type="Area2D" parent="."]
 position = Vector2(1368, 5)
 collision_mask = 3
-script = ExtResource("9_kspda")
+script = ExtResource("2_yh8kc")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="door"]
 position = Vector2(-265, 18)

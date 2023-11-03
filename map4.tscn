@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://lln8kpx83x1g"]
+
+[ext_resource type="Texture2D" uid="uid://cafdhihrubhmc" path="res://Sprite/map.png" id="1_ox4ch"]
+[ext_resource type="PackedScene" uid="uid://bbva0j5864bwo" path="res://player.tscn" id="2_0djki"]
+[ext_resource type="PackedScene" uid="uid://u1r1yb6txyg4" path="res://ui.tscn" id="3_kjlbg"]
+[ext_resource type="Script" path="res://door.gd" id="4_lb0ag"]
+[ext_resource type="PackedScene" uid="uid://2qa1mrpx24fn" path="res://samurai.tscn" id="5_uicko"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1lqun"]
+size = Vector2(455.75, 505)
+
+[node name="map2" type="Node2D"]
+
+[node name="map" type="StaticBody2D" parent="."]
+position = Vector2(-3, 31)
+scale = Vector2(0.992399, 0.994921)
+collision_layer = 257
+collision_mask = 257
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map"]
+polygon = PackedVector2Array(-5333.54, 2979.13, 2011, 3010, 5445, 3004, 5404, -3051, -5419.19, -3005.26, -5367.8, 2979.13, -8717.26, 3195.23, -9954.67, -7692.06, 11876.3, -9070.06, 15612.7, 9948.52, -33.2528, 4289.79, -5317.42, 3705.82, -8797.87, 3822.41, -9368.21, 3216.33)
+
+[node name="mapimage" type="Sprite2D" parent="."]
+modulate = Color(0.619608, 0.619608, 0.619608, 1)
+scale = Vector2(12, 12)
+texture = ExtResource("1_ox4ch")
+
+[node name="player" parent="." instance=ExtResource("2_0djki")]
+position = Vector2(-5000, 0)
+metadata/NPC = []
+
+[node name="UI" parent="." instance=ExtResource("3_kjlbg")]
+
+[node name="door" type="Area2D" parent="."]
+position = Vector2(10088, 341)
+script = ExtResource("4_lb0ag")
+
+[node name="Polygon2D2" type="Polygon2D" parent="door"]
+position = Vector2(-1284, -18)
+color = Color(0.490196, 0, 0.490196, 1)
+polygon = PackedVector2Array(1504, -218, 1079, -216, 1079, 136.942, 1079, 218, 1514, 235)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
+position = Vector2(13, -30)
+shape = SubResource("RectangleShape2D_1lqun")
+
+[node name="samurai" parent="." instance=ExtResource("5_uicko")]

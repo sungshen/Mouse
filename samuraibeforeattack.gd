@@ -1,14 +1,54 @@
 extends Polygon2D
 
+func _on_samurai_dash():
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+
+func _on_samurai_downslash():
+	scale = Vector2(8,0.1)
+	position = Vector2(0,252)
+	await get_tree().create_timer(0.2).timeout
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
+
+func _on_samurai_hekilekiisen(dir):
+	scale = Vector2(8,0.1)
+	rotation_degrees = atan2(dir.y,dir.x) * 180 / PI
+	position = Vector2.ZERO
+	await get_tree().create_timer(0.2).timeout
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
+
+func _on_samurai_jump():
+	scale = Vector2(0.3,0.7)
+	position = get_parent().pos - get_parent().position
+	await get_tree().create_timer(0.2).timeout
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
+
+func _on_samurai_sideslash(dir):
+	rotation_degrees = 90
+	scale = Vector2(8,0.1)
+	position = Vector2(dir*202,0)
+	await get_tree().create_timer(0.2).timeout
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
+
+func _on_samurai_upslash():
+	scale = Vector2(8,0.1)
+	position = Vector2(0,-252)
+	await get_tree().create_timer(0.2).timeout
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var alpha = 255
-	color = Color8(0,0,0,alpha)
-	alpha -= 1
-	visible = false
+func _on_samurai_discardhitbox():
+	rotation_degrees = 0
+	position = Vector2.ZERO
+	scale = Vector2.ZERO
